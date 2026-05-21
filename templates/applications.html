@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Мои заявки</h2>
+        <a href="{% url 'create_application' %}" class="btn btn-primary">
+            Новая заявка
+        </a>
+    </div>
+
+    {% if applications %}
+        <div class="row">
+            {% for app in applications %}
+                <div class="col-md-6 mb-4">
+                    <div class="card hover-card {% if app.status == 'completed' %}border-success{% elif app.status == 'in_progress' %}border-warning{% endif %}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ app.course.name }}</h5>
+                            <p class="card-text">
+                                <strong>Дата начала:</strong> {{ app.start_date|date:"d.m.Y" }}<br>
+                                <strong>Оплата:</strong> {{ app.get_payment_method_display }}<br>
+                                <strong>Статус:</strong> 
+                                <span class="badge {% if app.status == 'new' %}bg-primary{% elif app.status == 'in_progress' %}bg-warning{% else %}bg-success{% endif %}">
+                                    {{ app.get_status_display }}
+                                </span>
+                            </p>
+                            <div class="d-flex justify-content-between">
+                                <small class="text-muted">Создана: {{ app.created_at|date:"d.m.Y H:i" }}</small>
+                                {% if app.status == 'completed' %}
+                                    <a href="{% url 'create_review' app.id %}" class="btn btn-sm btn-outline-success">
+                                        Оставить отзыв
+                                    </a>
+                                {% else %}
+                                    <button class="btn btn-sm btn-outline-secondary" disabled>
+                                        Отзыв недоступен
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-inbox display-1 text-muted"></i>
+            <h3 class="mt-3">У вас пока нет заявок</h3>
+            <a href="{% url 'create_application' %}" class="btn btn-primary mt-3">
+                Подать первую заявку
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow hover-card">
+                <div class="card-body p-5">
+                    <h2 class="mb-4">Личный кабинет</h2>
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <div class="avatar-placeholder mb-3">
+                                <i class="bi bi-person-circle display-1"></i>
+                            </div>
+                            <h5>{{ profile.fio }}</h5>
+                        </div>
+                        <div class="col-md-8">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <strong>Логин:</strong> {{ user.username }}
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Email:</strong> {{ user.email }}
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Телефон:</strong> {{ profile.phone }}
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>Дата регистрации:</strong> {{ user.date_joined|date:"d.m.Y" }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <a href="{% url 'my_applications' %}" class="btn btn-primary">
+                            Мои заявки
+                        </a>
+                        <a href="{% url 'create_application' %}" class="btn btn-success">
+                            Подать заявку
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

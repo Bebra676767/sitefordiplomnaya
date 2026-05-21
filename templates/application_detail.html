@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body p-5">
+                    <h2 class="mb-4">Заявка #{{ application.id }}</h2>
+                    <table class="table">
+                        <tr>
+                            <td><strong>Курс:</strong></td>
+                            <td>{{ application.course.name }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Дата начала:</strong></td>
+                            <td>{{ application.start_date|date:"d.m.Y" }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Способ оплаты:</strong></td>
+                            <td>{{ application.get_payment_method_display }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Статус:</strong></td>
+                            <td>
+                                <span class="badge {% if application.status == 'new' %}bg-primary{% elif application.status == 'in_progress' %}bg-warning{% else %}bg-success{% endif %}">
+                                    {{ application.get_status_display }}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Дата создания:</strong></td>
+                            <td>{{ application.created_at|date:"d.m.Y H:i" }}</td>
+                        </tr>
+                    </table>
+                    <a href="{% url 'my_applications' %}" class="btn btn-secondary">
+                        Назад к списку
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
